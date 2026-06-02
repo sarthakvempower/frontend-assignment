@@ -29,36 +29,11 @@ A React + TypeScript implementation of a generic table component that supports s
 - CSS
 - Fetch API
 
-## Project Structure
-
-text src/ │ ├── components/ │   ├── Table/ │   ├── Pagination/ │   ├── SearchBar/ │ ├── services/ │   └── userService.ts │ ├── types/ │   └── user.types.ts │ ├── hooks/ │ ├── App.tsx └── main.tsx 
-
 ## Environment Variables
 
 Create a .env file in the root directory:
 
 env VITE_API_URL=YOUR_API_URL_HERE 
 
-## Installation
-
-Clone the repository:
-
-bash git clone <repository-url> 
-
-Navigate to the project:
-
-bash cd project-name 
-
-Install dependencies:
-
-bash npm install 
-
-Start the development server:
-
-bash npm run dev 
-
-Build for production:
-
-bash npm run build 
 
 <img width="954" height="735" alt="image" src="https://github.com/user-attachments/assets/54e77e9e-a511-442a-b0f4-658685b5d439" />
