@@ -1,73 +1,64 @@
-# React + TypeScript + Vite
+# Generic Table Component
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React + TypeScript implementation of a generic table component that supports searching, pagination, inline editing, row selection, and bulk deletion. The application fetches user data from the provided API and performs all operations in memory.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Core Requirements Implemented
 
-## React Compiler
+- Display user data in a tabular format with clearly distinguished column headers.
+- Search functionality that filters users across all properties.
+- Inline row editing.
+- Inline row deletion.
+- Pagination with:
+  - 10 rows per page
+  - First page button
+  - Previous page button
+  - Next page button
+  - Last page button
+  - Dynamic page count based on filtered results
+- Individual row selection using checkboxes.
+- Bulk deletion of selected rows.
+- Select/Deselect All functionality for rows displayed on the current page only.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- React
+- TypeScript
+- Vite
+- CSS
+- Fetch API
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Project Structure
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+text src/ │ ├── components/ │   ├── Table/ │   ├── Pagination/ │   ├── SearchBar/ │ ├── services/ │   └── userService.ts │ ├── types/ │   └── user.types.ts │ ├── hooks/ │ ├── App.tsx └── main.tsx 
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Environment Variables
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Create a .env file in the root directory:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+env VITE_API_URL=YOUR_API_URL_HERE 
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Installation
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Clone the repository:
+
+bash git clone <repository-url> 
+
+Navigate to the project:
+
+bash cd project-name 
+
+Install dependencies:
+
+bash npm install 
+
+Start the development server:
+
+bash npm run dev 
+
+Build for production:
+
+bash npm run build 
+
+<img width="954" height="735" alt="image" src="https://github.com/user-attachments/assets/54e77e9e-a511-442a-b0f4-658685b5d439" />
