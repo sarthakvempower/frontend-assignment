@@ -1,0 +1,380 @@
+/* ── Reset ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #f7f8fa;
+  color: #111827;
+  min-height: 100vh;
+}
+
+/* ── Page layout ── */
+.app {
+  padding: 2rem 1.5rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* ── Search toolbar ── */
+.toolbar {
+  padding: 10px 14px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/*
+  The search icon sits absolutely inside the input wrapper.
+  pointer-events: none means clicks pass through to the input underneath.
+  The CSS filter below tints the SVG grey to match the placeholder text colour.
+*/
+.search-icon-wrap {
+  position: absolute;
+  left: 10px;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+/*
+  filter: brightness(0) makes the SVG black,
+  then opacity(0.4) makes it the right shade of grey.
+  This is how you colour an <img src=".svg"> — you cannot use CSS color
+  on an img tag because the SVG is treated as a raster image, not code.
+*/
+.search-icon-wrap img {
+  filter: brightness(0) opacity(0.4);
+}
+
+.search-wrap input {
+  width: 100%;
+  padding: 8px 12px 8px 34px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #374151;
+  background: #ffffff;
+  outline: none;
+}
+
+.search-wrap input:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.15);
+}
+
+.search-wrap input::placeholder {
+  color: #9ca3af;
+}
+
+/* ── Table ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+/*
+  thead gets bold text and a bottom border to visually separate it
+  from the data rows — requirement 1 from the spec.
+*/
+thead tr {
+  border-bottom: 1px solid #e5e7eb;
+  background: #ffffff;
+}
+
+thead th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+}
+
+thead th:first-child {
+  text-align: center;
+}
+
+tbody tr {
+  border-bottom: 1px solid #f3f4f6;
+  transition: background 0.1s;
+}
+
+tbody tr:last-child {
+  border-bottom: none;
+}
+tbody tr:hover {
+  background: #f9fafb;
+}
+tbody tr.selected {
+  background: #eff6ff;
+}
+
+tbody td {
+  padding: 13px 16px;
+  font-size: 14px;
+  color: #374151;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+tbody td:first-child {
+  text-align: center;
+}
+
+/* ── Role — plain text, matching the reference screenshot ── */
+.badge {
+  font-size: 14px;
+  color: #374151;
+}
+
+/* ── Action buttons ── */
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.12s;
+  vertical-align: middle;
+}
+
+.btn-icon:hover {
+  background: #f3f4f6;
+}
+
+/*
+  Edit icon — grey.
+  filter: brightness(0) turns the SVG black,
+  then opacity(0.55) lightens it to the grey shown in the screenshot.
+*/
+.btn-icon-edit img {
+  filter: brightness(0) opacity(0.55);
+}
+
+.btn-icon-edit:hover img {
+  filter: brightness(0) opacity(0.85);
+}
+
+/*
+  Delete icon — red.
+  The sepia + saturate + hue-rotate combination shifts the
+  black SVG to red (#ef4444).
+  This is a standard technique for colouring SVG loaded as <img>.
+*/
+.btn-icon-delete img {
+  filter: brightness(0) saturate(100%) invert(33%) sepia(99%) saturate(600%)
+    hue-rotate(330deg) brightness(95%);
+}
+
+.btn-icon-delete:hover img {
+  filter: brightness(0) saturate(100%) invert(22%) sepia(99%) saturate(700%)
+    hue-rotate(340deg) brightness(90%);
+}
+
+/* ── Inline edit inputs (shown when a row is in edit mode) ── */
+.edit-input,
+.edit-select {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  padding: 5px 8px;
+  font-size: 13px;
+  font-family: inherit;
+  color: #111827;
+  background: #fff;
+  outline: none;
+}
+
+.edit-input:focus,
+.edit-select:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.15);
+}
+
+/* Red border shown when validateDraft() finds an error in this field */
+.edit-input.input-error {
+  border-color: #ef4444;
+}
+
+/* Small error message that appears below the invalid field */
+.field-error {
+  display: block;
+  font-size: 11px;
+  color: #ef4444;
+  margin-top: 3px;
+  line-height: 1.3;
+}
+
+/* Save button */
+.btn-save {
+  background: #10b981;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.btn-save:hover {
+  background: #059669;
+}
+
+/* Cancel button */
+.btn-cancel {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  padding: 5px 12px;
+  font-size: 12px;
+  color: #6b7280;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.btn-cancel:hover {
+  background: #f9fafb;
+}
+
+/* ── Footer ── */
+/*
+  justify-content: center centres the entire footer contents (Delete Selected
+  button + pagination) horizontally, matching the reference screenshot.
+  The Delete Selected button naturally sits to the left of the pagination
+  because they are flex children in order.
+*/
+.footer {
+  padding: 12px 16px;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+/* "Delete Selected" — pink pill as shown in the reference design */
+.btn-del-selected {
+  background: #f472b6;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.btn-del-selected:hover:not(:disabled) {
+  background: #ec4899;
+}
+.btn-del-selected:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Pagination ── */
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Every page button is a filled blue circle */
+.pg-btn {
+  min-width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: #3b82f6;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.12s,
+    opacity 0.12s;
+  font-family: inherit;
+}
+
+.pg-btn:hover:not(:disabled):not(.active) {
+  background: #2563eb;
+}
+
+/* Active page — white circle with a blue border */
+.pg-btn.active {
+  background: #ffffff;
+  color: #3b82f6;
+  border: 2px solid #3b82f6;
+}
+
+/* Navigation arrow buttons — grey circles (« ‹ › ») */
+.pg-btn.pg-nav {
+  background: #e5e7eb;
+  color: #6b7280;
+}
+.pg-btn.pg-nav:hover:not(:disabled) {
+  background: #d1d5db;
+  color: #374151;
+}
+
+.pg-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Checkbox ── */
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #3b82f6;
+  cursor: pointer;
+}
+
+/* ── State messages ── */
+.loading,
+.empty {
+  padding: 3rem;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+.error {
+  padding: 1rem 1.25rem;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-size: 13px;
+  border-bottom: 1px solid #fecaca;
+}
+
+.row {
+  transition: background 0.1s;
+}
